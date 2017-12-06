@@ -1,0 +1,98 @@
+{
+  "name": "stjude_chipseq_parameter_wrapper",
+  "title": "stjude_chipseq_parameter_wrapper",
+  "summary": "Wrapper application for ChIP-seq pipeline",
+  "dxapi": "1.0.0",
+  "version": "0.0.12",
+  "inputSpec": [
+    {
+      "name": "ChIP_fastq",
+      "label": "ChIP Reads",
+      "help": "A file, in gzipped FASTQ format, with the reads to be mapped",
+      "class": "file",
+      "patterns": ["*.fq.gz", "*.fastq.gz"]
+    },
+    {
+      "name": "Control_fastq",
+      "label": "Control Reads",
+      "help": "A file, in gzipped FASTQ format, with the reads to be mapped",
+      "class": "file",
+      "optional": true,
+      "patterns": ["*.fq.gz", "*.fastq.gz"]
+    },
+    {
+      "name": "out_prefix",
+      "label": "prefix for output",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "genome",
+      "label": "reference genome. mouse: mm9(MGSCv37), mm10(GRCm38); human: hg19(GRCh37), hg38(GRCh38); drosophila: dm3(BDGPr5)",
+      "choices":["mm9", "mm10", "hg19", "GRCh38", "dm3"],
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "bw_out",
+      "label": "output big wig file or not. The wiggle files can be uploaded to genome browser to view reads distribution along chromosomes.",
+      "class": "boolean",
+      "optional": true,
+      "default": true,
+      "help": ""
+    },
+    {
+      "name": "rm_blackList",
+      "label": "remove peaks from black list or not",
+      "class": "boolean",
+      "optional": true,
+      "default": true,
+      "help": ""
+    },
+    {
+      "name": "fragment_size",
+      "label": "This provides you an option to run peak calling with a specified fragment length instead of estimating it based on cross correlation. Input the number of base pairs like: 200.",
+      "class": "string",
+      "optional": true,
+      "default": "NA",
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "parameter_file",
+      "label": "the file with parameters",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "timeoutPolicy": {
+    "*": {
+      "hours": 48
+    }
+  },
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/stjude_chipseq_parameter_wrapper.sh",
+    "systemRequirements": {
+      "main": {
+        "instanceType": "azure:mem2_ssd1_x4"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "12.04"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [
+      "*"
+    ]
+  },
+  "authorizedUsers": ["org-stjude_cloud"],
+  "openSource": false
+}

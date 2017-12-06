@@ -1,0 +1,79 @@
+{
+  "name": "stjude_viewer_shortcut",
+  "title": "stjude_viewer_shortcut",
+  "summary": "create shortcut of viewer",
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "view_files",
+      "label": "input files to view",
+      "help": "",
+      "class": "array:file",
+      "patterns": ["*"],
+      "optional": false
+    },
+    {
+      "name": "parameter_file",
+      "label": "file which has parameters passed from other app",
+      "help": "",
+      "class": "file",
+      "patterns": ["*"],
+      "optional": true
+    },
+    {
+      "name": "out_prefix",
+      "label": "output prefix",
+      "help": "",
+      "class": "string",
+      "optional": true
+    },
+    {
+      "name": "genome",
+      "label": "reference genome. mouse: mm9(MGSCv37), mm10(GRCm38); human: hg19(GRCh37), hg38(GRCh38); drosophila: dm3(BDGPr5)",
+      "help": "",
+      "class": "string",
+      "optional": true,
+      "choices": [
+        "mm9",
+        "mm10",
+        "hg19",
+        "GRCh38",
+        "dm3"
+      ]
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "viewer_shortcut",
+      "label": "viewer shortcut file",
+      "help": "",
+      "class": "record",
+      "patterns": ["*"]
+    }
+  ],
+  "runSpec": {
+    "systemRequirementsByRegion": {
+      "azure:westus": {
+        "*": {
+          "instanceType": "azure:mem2_ssd1_x4"
+        }
+      }
+    },
+    "systemRequirements": {
+      "*": {
+        "instanceType": "azure:mem2_ssd1_x4"
+      }
+    },
+    "file": "src/code.sh",
+    "release": "12.04",
+    "interpreter": "bash",
+    "distribution": "Ubuntu"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW",
+    "network": [
+      "*"
+    ]
+  }
+}

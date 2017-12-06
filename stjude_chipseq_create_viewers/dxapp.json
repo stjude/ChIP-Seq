@@ -1,0 +1,78 @@
+{
+  "name": "stjude_chipseq_create_viewers",
+  "title": "stjude_chipseq_create_viewers",
+  "summary": "create shortcut of viewer",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "view_files",
+      "label": "input files to view",
+      "class": "array:file",
+      "optional": false,
+      "patterns": [
+        "*.bw", "*.bedj.gz", "*.bedj.gz.tbi"
+      ],
+      "help": ""
+    },
+    {
+      "name": "parameter_file",
+      "label": "file which has parameters passed from other app",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "out_prefix",
+      "label": "output prefix",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "genome",
+      "label": "reference genome. mouse: mm9(MGSCv37), mm10(GRCm38); human: hg19(GRCh37), hg38(GRCh38); drosophila: dm3(BDGPr5)",
+      "choices":["mm9", "mm10", "hg19", "GRCh38", "dm3"],
+      "class": "string",
+      "optional": true,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "viewer_shortcut",
+      "label": "viewer shortcut file",
+      "class": "record",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "timeoutPolicy": {
+    "*": {
+      "hours": 1
+    }
+  },
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/code.sh",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "azure:mem2_ssd1_x4"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "12.04"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "allProjects": "VIEW",
+    "network": [
+      "*"
+    ]
+  }
+}

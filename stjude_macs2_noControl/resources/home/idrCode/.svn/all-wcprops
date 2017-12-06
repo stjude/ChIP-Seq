@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode
+END
+submit.idrpair.lsf.sh
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/submit.idrpair.lsf.sh
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/README.txt
+END
+idrOverlap2npk.sh
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/idrOverlap2npk.sh
+END
+batch-consistency-plot.r
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/batch-consistency-plot.r
+END
+submit.idrmerge.lsf.sh
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/submit.idrmerge.lsf.sh
+END
+batch-consistency-plot-merged2.r
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/batch-consistency-plot-merged2.r
+END
+genome_table.txt
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/genome_table.txt
+END
+batch-consistency-analysis.r
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/batch-consistency-analysis.r
+END
+peakCallingPipelineForIdr.txt
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/peakCallingPipelineForIdr.txt
+END
+functions-all-clayton-12-13.r
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/idrCode/functions-all-clayton-12-13.r
+END

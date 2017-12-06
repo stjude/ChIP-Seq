@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools
+END
+prob1.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/prob1.h
+END
+vcfutils.pl
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/vcfutils.pl
+END
+bcf2qcall.c
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/bcf2qcall.c
+END
+bcftools
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/bcftools
+END
+bcf.c
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/bcf.c
+END
+call1.c
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/call1.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/Makefile
+END
+kmin.c
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/kmin.c
+END
+bcf.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/bcf.h
+END
+em.c
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/em.c
+END
+kmin.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/kmin.h
+END
+mut.c
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/mut.c
+END
+kfunc.c
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/kfunc.c
+END
+index.c
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/index.c
+END
+bcf.tex
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/bcf.tex
+END
+bcfutils.c
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/bcfutils.c
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/README
+END
+fet.c
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/fet.c
+END
+vcf.c
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/vcf.c
+END
+prob1.c
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/prob1.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/samtools-0.1.18/bcftools/main.c
+END

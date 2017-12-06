@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309
+END
+README.rst
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/README.rst
+END
+ChangeLog
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/ChangeLog
+END
+setup.py
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/setup.py
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/COPYING
+END
+PKG-INFO
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/PKG-INFO
+END
+MANIFEST.in
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/MANIFEST.in
+END
+INSTALL.rst
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/INSTALL.rst
+END
+setup.cfg
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/setup.cfg
+END
+setup_w_cython.py
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/compbio/!svn/ver/11253/apps/dnanexus/stjude_macs2/resources/home/dnanexus/MACS2-2.1.1.20160309/setup_w_cython.py
+END

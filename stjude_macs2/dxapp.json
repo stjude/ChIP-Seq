@@ -1,0 +1,229 @@
+{
+  "name": "stjude_macs2",
+  "title": "stjude_macs2",
+  "summary": "This app removes multiple mapped reads, duplicated reads and calls peaks. It requires both ChIP bam file and control bam file as input. ",
+  "dxapi": "1.0.0",
+  "version": "0.0.16",
+  "inputSpec": [
+    {
+      "name": "parameter_file",
+      "label": "file which has parameters passed from other app",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "ChIP_bam",
+      "label": "bam file for ChIP sample",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "Control_bam",
+      "label": "bam file for control sample",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*.bam"
+      ],
+      "help": ""
+    },
+    {
+      "name": "genome",
+      "label": "reference genome. mouse: mm9(MGSCv37), mm10(GRCm38); human: hg19(GRCh37), hg38(GRCh38); drosophila: dm3(BDGPr5)",
+      "choices":["mm9", "mm10", "hg19", "GRCh38", "dm3"],
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "out_prefix",
+      "label": "output prefix",
+      "class": "string",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "bw_out",
+      "label": "output wiggle files or not. The wiggle files can be uploaded to genome browser to view reads distribution along chromosomes.",
+      "class": "boolean",
+      "default": true,
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "rm_blackList",
+      "label": "remove peaks from black list or not",
+      "class": "boolean",
+      "optional": true,
+      "default": true,
+      "help": ""
+    },
+    {
+      "name": "is_rescue",
+      "label": "rescue multiple mapped reads from specified regions or not",
+      "class": "boolean",
+      "optional": false,
+      "default": false,
+      "help": ""
+    },
+    {
+      "name": "rescue_bed",
+      "label": "bed file with regions to be rescued for multiple mapped reads. Should be matched with the reference genome.",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bed"
+      ],
+      "help": ""
+    },
+    {
+      "name": "fragment_size",
+      "label": "run with a fixed fragment size (bp, has to be positive)",
+      "class": "string",
+      "default": "NA",
+      "optional": true,
+      "help": ""
+    },
+    {
+      "name": "FDR",
+      "label": "significance cutoff for peaks (FDR)",
+      "class": "float",
+      "optional": true,
+      "default": 0.05,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "peak_file",
+      "label": "bed file of identified peaks",
+      "class": "file",
+      "patterns": [
+        "*.bed"
+      ],
+      "help": ""
+    },
+    {
+      "name": "peak_bb",
+      "label": "big bed file of identified peaks",
+      "class": "file",
+      "patterns": [
+        "*.bb"
+      ],
+      "help": ""
+    },
+    {
+      "name": "metrics_file",
+      "label": "file of metrics",
+      "class": "file",
+      "patterns": [
+        "*.metrics.txt"
+      ],
+      "help": ""
+    },
+    {
+      "name": "peak_file_raw",
+      "label": "raw peak file directly outputted from macs2 which has peak quality score.",
+      "class": "file",
+      "patterns": [
+        "*.xls"
+      ],
+      "help": ""
+    },
+    {
+      "name": "ChIP_cc",
+      "label": "cross correlation plot for ChIP experiment.",
+      "class": "file",
+      "patterns": [
+        "*.pdf"
+      ],
+      "help": ""
+    },
+    {
+      "name": "Control_cc",
+      "label": "cross correlation plot for control experiment.",
+      "class": "file",
+      "patterns": [
+        "*.pdf"
+      ],
+      "help": ""
+    },
+    {
+      "name": "ChIP_bw",
+      "label": "big wig file for ChIP sample",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bw"
+      ],
+      "help": ""
+    },
+    {
+      "name": "Control_bw",
+      "label": "big wig file for control sample",
+      "class": "file",
+      "optional": true,
+      "patterns": [
+        "*.bw"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bedj",
+      "label": "json bed file",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "bedj_tbi",
+      "label": "json bed file index",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "macs2_log",
+      "label": "log for macs2",
+      "help": "cmd and software version are recorded.",
+      "class": "file",
+      "patterns": ["*.log"]
+    }
+  ],
+  "timeoutPolicy": {
+    "*": {
+      "hours": 48
+    }
+  },
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/stjude_macs2.sh",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "azure:mem2_ssd1_x8"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "12.04"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [
+      "*"
+    ]
+  },
+  "authorizedUsers": ["org-stjude_cloud"],
+  "openSource": false
+}

@@ -1,0 +1,78 @@
+{
+  "name": "stjude_macs2",
+  "title": "stjude_macs2",
+  "summary": "This app removes multiple mapped reads, duplicated reads and calls peaks. It requires both ChIP bam file and control bam file as input. ",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "ChIP_bam",
+      "label": "bam file for ChIP sample",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "Control_bam",
+      "label": "bam file for control sample",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "genome",
+      "label": "reference genome: hs for human, mm for mouse",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "out_prefix",
+      "label": "output prefix",
+      "class": "string",
+      "optional": false,
+      "help": ""
+    },
+    {
+      "name": "is_out_wig",
+      "label": "output wiggle files or not. The wiggle files can be uploaded to genome browser to view reads distribution along chromosomes.",
+      "class": "boolean",
+      "default": false,
+      "optional": true,
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "peak_file",
+      "label": "file of identified peaks",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "timeoutPolicy": {
+    "*": {
+      "hours": 48
+    }
+  },
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/stjude_macs2.sh",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x4"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "12.04"
+  }
+}

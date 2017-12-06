@@ -1,0 +1,64 @@
+{
+  "name": "stjude_chipseq_report",
+  "title": "stjude_chipseq_report",
+  "summary": "This app organizes and summarizes results from stjude chip-seq analysis pipeline",
+  "dxapi": "1.0.0",
+  "version": "0.0.11",
+  "inputSpec": [
+    {
+      "name": "parameter_file",
+      "label": "parameter_file",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    },
+    {
+      "name": "peak_caller_log",
+      "label": "peak_caller_log",
+      "class": "file",
+      "optional": false,
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "out_report",
+      "label": "out_report",
+      "class": "file",
+      "patterns": [
+        "*"
+      ],
+      "help": ""
+    }
+  ],
+  "timeoutPolicy": {
+    "*": {
+      "hours": 1
+    }
+  },
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/stjude_chipseq_report.sh",
+    "systemRequirements": {
+      "main": {
+        "instanceType": "azure:mem2_ssd1_x4"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "12.04"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [
+      "*"
+    ]
+  },
+  "authorizedUsers": ["org-stjude_cloud"],
+  "openSource": false
+}
