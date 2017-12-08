@@ -29,21 +29,34 @@ Here you'll find the source code for the applets implementing individual pipelin
   
   
 **Prerequisite**  
-The workflow incoporated the following softwares:  
+
+The workflow incoporated the following softwares:
+
 FastQC 0.11.3 [1]
+
 BWA 0.7.15 [2]  
+
 samtools 0.1.18 [3]
+
 MACS2 2.1.1 [4]
+
 SICER 1.1 [5]
+
 SPP 1.11 [6]
+
 These softwares are already included in the resource folder of each applet which implements them. Users don't have to download them again.
 
 **References**  
 
 [1]	Andrews, S., FastQC: a quality control tool for high throughput sequence data. 2010.
+
 [2] Li, H. and R. Durbin, Fast and accurate short read alignment with Burrows–Wheeler transform. Bioinformatics, 2009. 25(14): p. 1754-1760.
+
 [3]	Li, H., B. Handsaker, A. Wysoker, T. Fennell, J. Ruan, N. Homer, G. Marth, G. Abecasis, and R. Durbin, The sequence alignment/map format and SAMtools. Bioinformatics, 2009. 25(16): p. 2078-2079.
+
 [4]	Feng, J., T. Liu, B. Qin, Y. Zhang, and X.S. Liu, Identifying ChIP-seq enrichment using MACS. Nature protocols, 2012. 7(9): p. 1728-1740.
+
 [5]	Zang, C., D.E. Schones, C. Zeng, K. Cui, K. Zhao, and W. Peng, A clustering approach for identification of enriched domains from histone modification ChIP-Seq data. Bioinformatics, 2009. 25(15): p. 1952-1958.
+
 [6]	Kharchenko, P.V., M.Y. Tolstorukov, and P.J. Park, Design and analysis of ChIP-seq experiments for DNA-binding proteins. Nature biotechnology, 2008. 26(12): p. 1351-1359.
 
