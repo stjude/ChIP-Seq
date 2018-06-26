@@ -214,7 +214,7 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "12.04"
+    "release": "14.04"
   },
   "access": {
     "project": "CONTRIBUTE",

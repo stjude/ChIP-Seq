@@ -5,7 +5,6 @@
 # and to output each line as it is executed -- useful for debugging
 set -e -x -o pipefail
 
-
 # read parameters from file
 if [ "$parameter_file" != "" ]; then 
 echo "  [*] parsing parameters from parameter file ..."

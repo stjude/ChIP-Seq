@@ -65,6 +65,10 @@ main() {
     echo "python setup.py install" >> logfile
     cd
 
+	sudo apt-get -y remove python-requests
+	sudo easy_install pip
+	sudo pip install requests==2.7.0
+
     echo "  [*] Downloading input files..." 
     dx download "$ChIP_bam" -o ${ChIP_bam_prefix}.bam
     dx download "$Control_bam" -o ${Control_bam_prefix}.bam

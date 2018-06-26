@@ -50,11 +50,11 @@ main() {
     add-apt-repository 'deb http://us.archive.ubuntu.com/ubuntu/ precise main' 
     sudo apt-get update
     apt-get install python-numpy
-    apt-get install libamd2.2.0 
+    apt-get install libamd2.3.1 
     apt-get install liblcms1 
-    apt-get install libumfpack5.4.0 
-    apt-get install python-imaging 
-    apt-get install python-scipy
+    apt-get -y install libumfpack5.6.2 
+    apt-get -y install python-imaging 
+    apt-get -y install python-scipy
     echo "configure samtools ..."
     export PATH=$PATH:/home/dnanexus/samtools-0.1.18
     echo "export PATH=$PATH:/home/dnanexus/samtools-0.1.18" >> logfile
