@@ -74,5 +74,6 @@
     "network": [
       "*"
     ]
-  }
+  },
+  "authorizedUsers": ["org-stjude_cloud_app_runners"]
 }

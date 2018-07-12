@@ -136,6 +136,6 @@
     "upstreamAuthor": "Simon Andrews",
     "whatsNew": "* 2.2.0: Updated to FastQC 0.11.3; changed default instance type\n* 2.1.0: Updated to FastQC 0.11.2; changed default values for the 'kmer_size' and 'nogroup' parameters\n* 2.0.1: Fixed error when mid line is null\n* 2.0.0: Changing output spec to TXT and HTML files"
   },
-  "authorizedUsers": ["org-stjude_cloud"],
+  "authorizedUsers": ["org-stjude_cloud", "org-stjude_cloud_app_runners"],
   "openSource": false
 }
