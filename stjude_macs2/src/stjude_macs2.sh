@@ -58,15 +58,9 @@ main() {
     sudo apt-get install bedtools
     echo "install macs2 ..."
     sudo apt-get install python-numpy 
-    cd /home/dnanexus/MACS2-2.1.1.20160309 
-    python setup.py install
-    echo "cd /home/dnanexus/MACS2-2.1.1.20160309" >> logfile
-    echo "python setup.py install" >> logfile
-    cd
 
-    sudo apt-get -y remove python-requests
-    sudo easy_install pip
-    pip install requests==2.8.0
+    pip install MACS2
+    echo "pip install MACS2" >> logfile
 
     echo "  [*] Downloading input files..." 
     dx download "$ChIP_bam" -o ${ChIP_bam_prefix}.bam
