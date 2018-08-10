@@ -54,7 +54,6 @@ main() {
     R CMD INSTALL /home/phantompeakqualtools/spp_1.10.1.tar.gz
     echo "R CMD INSTALL /home/phantompeakqualtools/spp_1.10.1.tar.gz" >> logfile
 
-    
     echo "install bedtools ..."
     sudo apt-get install bedtools
     echo "install macs2 ..."
@@ -65,14 +64,14 @@ main() {
     echo "python setup.py install" >> logfile
     cd
 
-	sudo apt-get -y remove python-requests
-	sudo easy_install pip
-	sudo pip install requests==2.7.0
+    sudo apt-get -y remove python-requests
+    sudo easy_install pip
+    pip install requests==2.8.0
 
     echo "  [*] Downloading input files..." 
     dx download "$ChIP_bam" -o ${ChIP_bam_prefix}.bam
     dx download "$Control_bam" -o ${Control_bam_prefix}.bam
-        
+    
     # Path setup 
     export PATH=$PATH:/home/dnanexus/samtools-0.1.18
     echo "export PATH=$PATH:/home/dnanexus/samtools-0.1.18" >> logfile

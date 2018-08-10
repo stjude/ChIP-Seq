@@ -64,7 +64,8 @@ main() {
 
 	sudo apt-get -y remove python-requests 
 	sudo easy_install pip
-	sudo pip install requests==2.7.0
+	pip install requests==2.8.0
+
     echo "  [*] Downloading input files..." 
     dx download "$ChIP_bam" -o ${ChIP_bam_prefix}.bam
         
