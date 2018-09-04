@@ -130,9 +130,9 @@ main() {
     echo "upload cross correlation plot..."
     # set up the output folder
     dx mkdir -p $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/
-    ChIP_cc=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_phantomPeak.pdf --brief  )
+    ChIP_cc=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_phantomPeak.pdf --brief  )
     dx-jobutil-add-output ChIP_cc "$ChIP_cc" --class=file
-    Control_cc=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${Control_bam_prefix}_phantomPeak.pdf --brief  )
+    Control_cc=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${Control_bam_prefix}_phantomPeak.pdf --brief  )
     dx-jobutil-add-output Control_cc "$Control_cc" --class=file
 
     echo "parse fragment size ..."
@@ -246,14 +246,14 @@ rm ${i}_processed.bedg
     peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.clean.bed --brief  )
     LC_COLLATE=C sort -k1,1 -k2,2n ${ChIP_bam_prefix}_sicer.clean.bed > ${ChIP_bam_prefix}_sicer.clean.sorted.bed
     bedToBigBed ${ChIP_bam_prefix}_sicer.clean.sorted.bed ${genome}.chrom.sizes ${ChIP_bam_prefix}_sicer.clean.bb
-    peak_bb=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.clean.bb --brief  )
+    peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.clean.bb --brief  )
     else
     gawk '{if($1 !~ /^chr/) {print "chr"$_} else {print $_} }' sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR* | cut -f 1-3 > ${ChIP_bam_prefix}_sicer.bed
     echo "gawk '{if($1 !~ /^chr/) {print "chr"$_} else {print $_} }' sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR* | cut -f 1-3 > ${ChIP_bam_prefix}_sicer.bed" >> logfile
     peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.bed --brief  )
     LC_COLLATE=C sort -k1,1 -k2,2n ${ChIP_bam_prefix}_sicer.bed > ${ChIP_bam_prefix}_sicer.sorted.bed
     bedToBigBed ${ChIP_bam_prefix}_sicer.sorted.bed ${genome}.chrom.sizes ${ChIP_bam_prefix}_sicer.bb
-    peak_bb=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.bb --brief  )
+    peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.bb --brief  )
     fi
     dx-jobutil-add-output peak_file "$peak_file" --class=file
     dx-jobutil-add-output peak_bb "$peak_bb" --class=file

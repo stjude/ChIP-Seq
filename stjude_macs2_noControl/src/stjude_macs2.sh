@@ -113,7 +113,7 @@ main() {
     # set up output folder
     dx mkdir -p $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/
     echo "upload cross correlation plots..."
-    ChIP_cc=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ ${ChIP_bam_prefix}_phantomPeak.pdf --brief  )
+    ChIP_cc=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ ${ChIP_bam_prefix}_phantomPeak.pdf --brief  )
     dx-jobutil-add-output ChIP_cc "$ChIP_cc" --class=file
 
     echo "parse fragment size ..."
@@ -230,14 +230,14 @@ rm ${i}_processed.bedg
     head macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed
     tail macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed
     bedToBigBed macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed ${genome}.chrom.sizes macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb
-    peak_bb=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb --brief  )
+    peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb --brief  )
     else 
     cut -f 1-4 macs2/${ChIP_bam_prefix}_peaks.narrowPeak > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed
     echo "upload peak file ..."
     peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed --brief  )
     LC_COLLATE=C sort -k1,1 -k2,2n macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.sorted.bed
     bedToBigBed macs2/${ChIP_bam_prefix}_peaks.narrowPeak.sorted.bed ${genome}.chrom.sizes macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb
-    peak_bb=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb --brief  )
+    peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb --brief  )
     fi
 
     dx-jobutil-add-output peak_file "$peak_file" --class=file

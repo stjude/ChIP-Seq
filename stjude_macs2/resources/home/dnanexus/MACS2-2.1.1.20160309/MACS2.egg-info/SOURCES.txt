@@ -3,6 +3,7 @@ ChangeLog
 INSTALL.rst
 MANIFEST.in
 README.rst
+setup.cfg
 setup.py
 setup_w_cython.py
 MACS2/Constants.py
