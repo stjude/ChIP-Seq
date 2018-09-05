@@ -1,5 +1,4 @@
 #!/bin/bash
-# stjude_chipseq_parameter_wrapper 0.0.1
 
 set -e -x -o pipefail
 
@@ -52,8 +51,9 @@ main() {
         dCont=$(dx ls "$DX_PROJECT_CONTEXT_ID":"$out_folder/Results/$out_prefix/") 
         echo "Number of files in this folder: ${#dCont}"
         if [ "${#dCont}" -gt 0 ];then
+            # Make output path unique by adding the Job ID to the out_prefix
+            # The pipeline needs an empty directory downstream
             out_prefix="${out_prefix}_${DX_JOB_ID:0:10}"
-    	    # dx-jobutil-report-error "Output folder contains data - Please use an empty folder or path" AppError
         fi
     fi
 
