@@ -6,7 +6,7 @@
     "Read Mapping"
   ],
   "dxapi": "1.0.0",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "inputSpec": [
     {
       "name": "reads_fastqgz",

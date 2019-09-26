@@ -7,7 +7,7 @@
     "Statistics"
   ],
   "dxapi": "1.0.0",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "inputSpec": [
     {
       "name": "reads",

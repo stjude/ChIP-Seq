@@ -3,7 +3,7 @@
   "title": "stjude_sicer_noControl",
   "summary": "SICER is used to call broad peaks from ChIP-seq data. ",
   "dxapi": "1.0.0",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "inputSpec": [
     {
       "name": "parameter_file",
