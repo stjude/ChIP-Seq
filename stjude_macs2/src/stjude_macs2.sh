@@ -59,7 +59,7 @@ main() {
     echo "install macs2 ..."
     sudo apt-get install python-numpy 
 
-    pip install MACS2
+    pip install MACS2==2.1.1.20160309
     echo "pip install MACS2" >> logfile
 
     echo "  [*] Downloading input files..." 
