@@ -3,7 +3,7 @@
   "title": "stjude_chipseq_create_viewers",
   "summary": "create shortcut of viewer",
   "dxapi": "1.0.0",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "inputSpec": [
     {
       "name": "view_files",
@@ -66,8 +66,8 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "16.04",
-    "version": "1"
+    "release": "20.04",
+    "version": "0"
   },
   "access": {
     "project": "CONTRIBUTE",

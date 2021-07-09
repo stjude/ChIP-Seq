@@ -3,7 +3,7 @@
   "title": "stjude_macs2_noControl",
   "summary": "This app removes multiple mapped reads, duplicated reads and calls peaks. It requires both ChIP bam file and control bam file as input. ",
   "dxapi": "1.0.0",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "inputSpec": [
     {
       "name": "parameter_file",
@@ -161,8 +161,8 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "16.04",
-    "version": "1"
+    "release": "20.04",
+    "version": "0"
   },
   "access": {
     "project": "CONTRIBUTE",

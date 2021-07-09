@@ -3,7 +3,7 @@
   "title": "stjude_chipseq_report",
   "summary": "This app organizes and summarizes results from stjude chip-seq analysis pipeline",
   "dxapi": "1.0.0",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "inputSpec": [
     {
       "name": "parameter_file",
@@ -51,8 +51,8 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "16.04",
-    "version": "1"
+    "release": "20.04",
+    "version": "0"
   },
   "access": {
     "project": "ADMINISTER",

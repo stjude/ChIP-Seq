@@ -3,7 +3,7 @@
   "title": "stjude_chipseq_parameter_wrapper",
   "summary": "Wrapper application for ChIP-seq pipeline",
   "dxapi": "1.0.0",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "inputSpec": [
     {
       "name": "ChIP_fastq",
@@ -85,8 +85,8 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "16.04",
-    "version": "1"
+    "release": "20.04",
+    "version": "0"
   },
   "access": {
     "project": "CONTRIBUTE",

@@ -23,8 +23,8 @@ main() {
     # write log
     #############################################
 
-    echo "Value of ChIP_bam: '$ChIP_bam'" 
-    echo "Value of Control_bam: '$Control_bam'" 
+    echo "Value of ChIP_bam: '$ChIP_bam'"
+    echo "Value of Control_bam: '$Control_bam'"
     echo "Value of genome: '$genome'"
     echo "Value of out_prefix: '$out_prefix'"
     echo "Value of FDR: '$FDR'"
@@ -39,47 +39,60 @@ main() {
     echo ""
     echo "=== Setup ==="
     sudo apt-get update
-    sudo apt-get install libsigsegv2
+    apt-get -y install \
+      bc \
+      bedtools \
+      libbz2-dev \
+      liblzma-dev \
+      libncurses-dev \
+      libsigsegv2 \
+      openjdk-8-jdk \
+      python-numpy \
+      python-pil \
+      python2 \
+      python2-dev \
+      python3-pil \
+      python3-scipy \
+      r-bioc-rsamtools \
+      r-cran-bitops \
+      r-cran-catools \
+      r-cran-snow \
+      r-cran-spp \
+      tabix
+
+    sudo ln -s /usr/bin/python2 /usr/bin/python
+
+    curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+    python2 get-pip.py
+    pip2 install \
+      scipy
+
     export PATH=/user/bin:$PATH
     gawk --version
-    sudo apt-get --yes install openjdk-8-jdk
     java -version
-    sudo apt-get install tabix
 
-    echo "install spp ..."
-    R --version
-    R CMD INSTALL /home/bitops_1.0-6.tar.gz
-    R CMD INSTALL /home/caTools_1.17.1.tar.gz
-    R CMD INSTALL /home/snow_0.4-1.tar.gz
-    R CMD INSTALL /home/phantompeakqualtools/spp_1.10.1.tar.gz
-    echo "R CMD INSTALL /home/phantompeakqualtools/spp_1.10.1.tar.gz" >> logfile
+    pip2 install MACS2==2.1.1.20160309
+    echo "pip2 install MACS2" >> logfile
 
-    echo "install bedtools ..."
-    sudo apt-get install bedtools
-    echo "install macs2 ..."
-    sudo apt-get install python-numpy 
-
-    pip install MACS2==2.1.1.20160309
-    echo "pip install MACS2" >> logfile
-
-    echo "  [*] Downloading input files..." 
+    echo "  [*] Downloading input files..."
     dx download "$ChIP_bam" -o ${ChIP_bam_prefix}.bam
     dx download "$Control_bam" -o ${Control_bam_prefix}.bam
     
     # Path setup 
-    export PATH=$PATH:/home/dnanexus/samtools-0.1.18
+    (cd /home/dnanexus/samtools-0.1.18 && make)
     echo "export PATH=$PATH:/home/dnanexus/samtools-0.1.18" >> logfile
+    export PATH=$PATH:/home/dnanexus/samtools-0.1.18
     source fun_rescue.sh
 
     #############################################
     # parse parameters from file
     #############################################
-    if [ "$parameter_file" != "" ]; then 
-    echo "  [*] parsing parameters from parameter file ..."
-    dx download "$parameter_file" -o parameters.txt
-    source parameters.txt
-    echo "$genome"
-    echo "$out_prefix"
+    if [ "$parameter_file" != "" ]; then
+      echo "  [*] parsing parameters from parameter file ..."
+      dx download "$parameter_file" -o parameters.txt
+      source parameters.txt
+      echo "$genome"
+      echo "$out_prefix"
     fi
     if [ "$genome" == "mm9" ] || [ "$genome" == "mm10" ] ; then export specie=mm; fi
     if [ "$genome" == "hg19" ] || [ "$genome" == "GRCh38" ] ; then export specie=hs; fi
@@ -89,22 +102,21 @@ main() {
     #############################################
     # remove multiple mapped reads and duplicates
     #############################################
-    echo "removing multiple mapped reads and duplicates ..."
-    echo "removing multiple mapped reads and duplicates ..." >> logfile
-    java -Xmx4g -jar picard.jar SortSam VALIDATION_STRINGENCY=LENIENT I=${ChIP_bam_prefix}.bam O=${ChIP_bam_prefix}.sort.bam SORT_ORDER=coordinate &
+    echo "removing multiple mapped reads and duplicates ..." | tee -a logfile
     echo "java -Xmx4g -jar picard.jar SortSam VALIDATION_STRINGENCY=LENIENT I=${ChIP_bam_prefix}.bam O=${ChIP_bam_prefix}.sort.bam SORT_ORDER=coordinate &" >> logfile
-    java -Xmx4g -jar picard.jar SortSam VALIDATION_STRINGENCY=LENIENT I=${Control_bam_prefix}.bam O=${Control_bam_prefix}.sort.bam SORT_ORDER=coordinate &
+    java -Xmx4g -jar picard.jar SortSam VALIDATION_STRINGENCY=LENIENT I=${ChIP_bam_prefix}.bam O=${ChIP_bam_prefix}.sort.bam SORT_ORDER=coordinate &
     echo "java -Xmx4g -jar picard.jar SortSam VALIDATION_STRINGENCY=LENIENT I=${Control_bam_prefix}.bam O=${Control_bam_prefix}.sort.bam SORT_ORDER=coordinate &" >> logfile
+    java -Xmx4g -jar picard.jar SortSam VALIDATION_STRINGENCY=LENIENT I=${Control_bam_prefix}.bam O=${Control_bam_prefix}.sort.bam SORT_ORDER=coordinate &
     wait
-    java -Xmx4g -jar picard.jar MarkDuplicates VALIDATION_STRINGENCY=LENIENT I=${ChIP_bam_prefix}.sort.bam O=${ChIP_bam_prefix}_processed.1.bam M=marked_dup_metrics.txt REMOVE_DUPLICATES=TRUE &
     echo "java -Xmx4g -jar picard.jar MarkDuplicates VALIDATION_STRINGENCY=LENIENT I=${ChIP_bam_prefix}.sort.bam O=${ChIP_bam_prefix}_processed.1.bam M=marked_dup_metrics.txt REMOVE_DUPLICATES=TRUE &" >> logfile
-    java -Xmx4g -jar picard.jar MarkDuplicates VALIDATION_STRINGENCY=LENIENT I=${Control_bam_prefix}.sort.bam O=${Control_bam_prefix}_processed.1.bam M=marked_dup_metrics.txt REMOVE_DUPLICATES=TRUE &
+    java -Xmx4g -jar picard.jar MarkDuplicates VALIDATION_STRINGENCY=LENIENT I=${ChIP_bam_prefix}.sort.bam O=${ChIP_bam_prefix}_processed.1.bam M=marked_dup_metrics.txt REMOVE_DUPLICATES=TRUE &
     echo "java -Xmx4g -jar picard.jar MarkDuplicates VALIDATION_STRINGENCY=LENIENT I=${Control_bam_prefix}.sort.bam O=${Control_bam_prefix}_processed.1.bam M=marked_dup_metrics.txt REMOVE_DUPLICATES=TRUE &" >> logfile
+    java -Xmx4g -jar picard.jar MarkDuplicates VALIDATION_STRINGENCY=LENIENT I=${Control_bam_prefix}.sort.bam O=${Control_bam_prefix}_processed.1.bam M=marked_dup_metrics.txt REMOVE_DUPLICATES=TRUE &
     wait
     rm ${ChIP_bam_prefix}.sort.bam ${Control_bam_prefix}.sort.bam
     
     ######################################################
-    # rescue multiple mapped reads from inputted regions 
+    # rescue multiple mapped reads from inputted regions
     #######################################################
     if [ "$is_rescue" == "true" ]; then
 	dx download "$rescue_bed" -o rescue.bed
@@ -126,12 +138,11 @@ main() {
     #############################################
     # run spp cross correlation
     #############################################
-    echo "run spp cross correlation ..."
-    echo "run spp cross correlation ..." >> logfile
-    Rscript /home/phantompeakqualtools/run_spp_nodups.R -c=${ChIP_bam_prefix}_processed.bam -savp=${ChIP_bam_prefix}_phantomPeak.pdf -out=${ChIP_bam_prefix}_phantomPeak.out &
+    echo "run spp cross correlation ..." | tee -a logfile
     echo "Rscript /home/phantompeakqualtools/run_spp_nodups.R -c=${ChIP_bam_prefix}_processed.bam -savp=${ChIP_bam_prefix}_phantomPeak.pdf -out=${ChIP_bam_prefix}_phantomPeak.out &" >> logfile
-    Rscript /home/phantompeakqualtools/run_spp_nodups.R -c=${Control_bam_prefix}_processed.bam -savp=${Control_bam_prefix}_phantomPeak.pdf -out=${Control_bam_prefix}_phantomPeak.out &
+    Rscript /home/phantompeakqualtools/run_spp_nodups.R -c=${ChIP_bam_prefix}_processed.bam -savp=${ChIP_bam_prefix}_phantomPeak.pdf -out=${ChIP_bam_prefix}_phantomPeak.out &
     echo "Rscript /home/phantompeakqualtools/run_spp_nodups.R -c=${Control_bam_prefix}_processed.bam -savp=${Control_bam_prefix}_phantomPeak.pdf -out=${Control_bam_prefix}_phantomPeak.out &" >> logfile
+    Rscript /home/phantompeakqualtools/run_spp_nodups.R -c=${Control_bam_prefix}_processed.bam -savp=${Control_bam_prefix}_phantomPeak.pdf -out=${Control_bam_prefix}_phantomPeak.out &
     wait
 
     # set up output folder
@@ -152,12 +163,11 @@ main() {
     #############################################
     # run MACS2
     #############################################
-    echo "Calling peaks with MACS2 ..."
-    echo "Calling peaks with MACS2 ..." >> logfile
-    macs2 callpeak -q $FDR -t ${ChIP_bam_prefix}_processed.bam -c ${Control_bam_prefix}_processed.bam -g $specie -f BAM --outdir macs2  -n ${ChIP_bam_prefix} --nomodel --extsize $fragment_size
+    echo "Calling peaks with MACS2 ..." | tee -a logfile
     echo "macs2 callpeak -q $FDR -t ${ChIP_bam_prefix}_processed.bam -c ${Control_bam_prefix}_processed.bam -g $specie -f BAM --outdir macs2  -n ${ChIP_bam_prefix} --nomodel --extsize $fragment_size" >> logfile
+    macs2 callpeak -q $FDR -t ${ChIP_bam_prefix}_processed.bam -c ${Control_bam_prefix}_processed.bam -g $specie -f BAM --outdir macs2  -n ${ChIP_bam_prefix} --nomodel --extsize $fragment_size
     nPeaks=`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak | awk '{print $1}' `
-    if [ "$nPeaks" == "0" ]; then dx-jobutil-report-error "No peaks are called." AppError; fi 
+    if [ "$nPeaks" == "0" ]; then dx-jobutil-report-error "No peaks are called." AppError; fi
    
 
     #############################################
@@ -165,13 +175,12 @@ main() {
     #############################################
     echo "rm_blackList=$rm_blackList"
     if [ "$rm_blackList" == "true" ]; then
-    echo "Removing peaks overlapped with black list ..."
-    black_list=${genome}-Blacklist.bed
-    subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed
-    subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed
-    echo "Removing peaks overlapped with black list ..." >> logfile
-    echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed" >> logfile
-    echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed" >> logfile
+      echo "Removing peaks overlapped with black list ..." | tee -a logfile
+      black_list=${genome}-Blacklist.bed
+      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed" >> logfile
+      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed
+      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed" >> logfile
+      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed
     fi
 
     #############################################
@@ -194,7 +203,7 @@ main() {
     echo >> ${ChIP_bam_prefix}.metrics.txt
     echo "`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak` peaks" >> ${ChIP_bam_prefix}.metrics.txt
     if [ "$rm_blackList" == "true" ]; then
-    echo "`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed` peaks after subtracting peaks from blacklist" >> ${ChIP_bam_prefix}.metrics.txt
+      echo "`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed` peaks after subtracting peaks from blacklist" >> ${ChIP_bam_prefix}.metrics.txt
     fi
     echo "fragment size used: $fragment_size" >> ${ChIP_bam_prefix}.metrics.txt
 
@@ -204,72 +213,52 @@ main() {
     #############################################
     echo "output bigwig file ..."
     if [ "$bw_out" == "true" ]; then
-function bam2bw {
-i=$1
-nReads=`head -n 3 ${ChIP_bam_prefix}.metrics.txt| grep -w $i | awk '{print $5}'`
-scale=`echo "15000000/$nReads" | bc -l `
-bamToBed -i ${i}_processed.bam > ${i}_processed.bed
-extendTag.pl ${genome}.chrom.sizes ${i}_processed.bed $fragment_size 
-echo "genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n"
-genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n > ${i}_processed.bedg
-bedGraphToBigWig ${i}_processed.bedg ${genome}.chrom.sizes ${i}.bw
-echo "genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n" >> logfile
-echo "genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n > ${i}_processed.bedg" >> logfile
-echo "bedGraphToBigWig ${i}_processed.bedg ${genome}.chrom.sizes ${i}.bw" >> logfile
-rm ${i}_processed.bedg
-}
-    for prefix in "${ChIP_bam_prefix}" "${Control_bam_prefix}"
-    do
-	bam2bw $prefix & 
-    done
-    wait
+      function bam2bw {
+        i=$1
+        nReads=`head -n 3 ${ChIP_bam_prefix}.metrics.txt| grep -w $i | awk '{print $5}'`
+        scale=`echo "15000000/$nReads" | bc -l `
+        bamToBed -i ${i}_processed.bam > ${i}_processed.bed
+        extendTag.pl ${genome}.chrom.sizes ${i}_processed.bed $fragment_size
+        #echo "genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n"
+        echo "genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n > ${i}_processed.bedg" >> logfile
+        genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n > ${i}_processed.bedg
+        echo "bedGraphToBigWig ${i}_processed.bedg ${genome}.chrom.sizes ${i}.bw" >> logfile
+        bedGraphToBigWig ${i}_processed.bedg ${genome}.chrom.sizes ${i}.bw
+        #echo "genomeCoverageBed -bg -i ${i}_processed.extended.bed -g ${genome}.chrom.sizes -scale "$scale" | sort -k1,1 -k2,2n" >> logfile
+        rm ${i}_processed.bedg
+      }
+      for prefix in "${ChIP_bam_prefix}" "${Control_bam_prefix}"
+      do
+        bam2bw $prefix &
+      done
+      wait
     fi
-
-    # Fill in your application code here.
-    #
-    # To report any recognized errors in the correct format in
-    # $HOME/job_error.json and exit this script, you can use the
-    # dx-jobutil-report-error utility as follows:
-    #
-    # dx-jobutil-report-error "My error message"
-    #
-    # Note however that this entire bash script is executed with -e
-    # when running in the cloud, so any line which returns a nonzero
-    # exit code will prematurely exit the script; if no error was
-    # reported in the job_error.json file, then the failure reason
-    # will be AppInternalError with a generic error message.
-
-    # The following line(s) use the dx command-line tool to upload your file
-    # outputs after you have created them on the local file system.  It assumes
-    # that you have used the output field name for the filename for each output,
-    # but you can change that behavior to suit your needs.  Run "dx upload -h"
-    # to see more options to set metadata.
 
     echo "uploading files ..."
 
 
     if [ "$rm_blackList" == "true" ]; then
-    peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed --brief  )
-    LC_COLLATE=C sort -k1,1 -k2,2n macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed
-    bedToBigBed macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed ${genome}.chrom.sizes macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb
-    peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb --brief  )
-    else 
-    cut -f 1-4 macs2/${ChIP_bam_prefix}_peaks.narrowPeak > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed
-    echo "upload peak file ..."
-    peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed --brief  )
-    LC_COLLATE=C sort -k1,1 -k2,2n macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.sorted.bed
-    bedToBigBed macs2/${ChIP_bam_prefix}_peaks.narrowPeak.sorted.bed ${genome}.chrom.sizes macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb
-    peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb --brief  )
+      peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed --brief  )
+      LC_COLLATE=C sort -k1,1 -k2,2n macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed
+      bedToBigBed macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed ${genome}.chrom.sizes macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb
+      peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bb --brief  )
+    else
+      cut -f 1-4 macs2/${ChIP_bam_prefix}_peaks.narrowPeak > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed
+      echo "upload peak file ..."
+      peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed --brief  )
+      LC_COLLATE=C sort -k1,1 -k2,2n macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bed > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.sorted.bed
+      bedToBigBed macs2/${ChIP_bam_prefix}_peaks.narrowPeak.sorted.bed ${genome}.chrom.sizes macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb
+      peak_bb=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.bb --brief  )
     fi
 
     dx-jobutil-add-output peak_file "$peak_file" --class=file
     dx-jobutil-add-output peak_bb "$peak_bb" --class=file
 
     if [ "$bw_out" == "true" ]; then
-    ChIP_bw=$(dx upload --tag sjcp-result-file -r --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ ${ChIP_bam_prefix}.bw --brief  )
-    dx-jobutil-add-output ChIP_bw "$ChIP_bw" --class=file
-    Control_bw=$(dx upload --tag sjcp-result-file -r --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ ${Control_bam_prefix}.bw --brief  )
-    dx-jobutil-add-output Control_bw "$Control_bw" --class=file
+      ChIP_bw=$(dx upload --tag sjcp-result-file -r --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ ${ChIP_bam_prefix}.bw --brief  )
+      dx-jobutil-add-output ChIP_bw "$ChIP_bw" --class=file
+      Control_bw=$(dx upload --tag sjcp-result-file -r --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ ${Control_bam_prefix}.bw --brief  )
+      dx-jobutil-add-output Control_bw "$Control_bw" --class=file
     fi
 
     mv logfile ${ChIP_bam_prefix}.macs2.log
@@ -279,16 +268,12 @@ rm ${i}_processed.bedg
     dx-jobutil-add-output metrics_file "$metrics_file" --class=file
     peak_file_raw=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.xls --brief  )
     dx-jobutil-add-output peak_file_raw "$peak_file_raw" --class=file
-    # The following line(s) use the utility dx-jobutil-add-output to format and
-    # add output variables to your job's output as appropriate for the output
-    # class.  Run "dx-jobutil-add-output -h" for more information on what it
-    # does.
 
     # output json bed files
     source bed2jsonbed.sh	
     if [ "$rm_blackList" == "true" ]; then
 	bed2convert=${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed
-    else 
+    else
 	bed2convert=${ChIP_bam_prefix}_peaks.narrowPeak.bed
     fi
     run_bed2jsonbed macs2/$bed2convert

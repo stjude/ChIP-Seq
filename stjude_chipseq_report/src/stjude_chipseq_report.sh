@@ -86,32 +86,7 @@ main() {
     # visulization
     echo "$report_section. Upload \"$peak_caller/$peak_bed\" or \"$peak_caller/$peak_bb\", \"$peak_caller/${ChIP_fastq_name}.bw\" and \"$peak_caller/${Control_fastq_name}.bw\" to IGV (http://software.broadinstitute.org/software/igv/) or UCSC genome browser (https://genome.ucsc.edu/cgi-bin/hgGateway) to view." >> $out_prefix.readme.doc
 
-    # Fill in your application code here.
-    #
-    # To report any recognized errors in the correct format in
-    # $HOME/job_error.json and exit this script, you can use the
-    # dx-jobutil-report-error utility as follows:
-    #
-    #   dx-jobutil-report-error "My error message"
-    #
-    # Note however that this entire bash script is executed with -e
-    # when running in the cloud, so any line which returns a nonzero
-    # exit code will prematurely exit the script; if no error was
-    # reported in the job_error.json file, then the failure reason
-    # will be AppInternalError with a generic error message.
-
-    # The following line(s) use the dx command-line tool to upload your file
-    # outputs after you have created them on the local file system.  It assumes
-    # that you have used the output field name for the filename for each output,
-    # but you can change that behavior to suit your needs.  Run "dx upload -h"
-    # to see more options to set metadata.
-
     out_report=$(dx upload --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/ $out_prefix.readme.doc --brief)
-
-    # The following line(s) use the utility dx-jobutil-add-output to format and
-    # add output variables to your job's output as appropriate for the output
-    # class.  Run "dx-jobutil-add-output -h" for more information on what it
-    # does.
 
     dx-jobutil-add-output out_report "$out_report" --class=file
     dx rm $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/$out_prefix.parameters.txt
