@@ -3,7 +3,7 @@
 set -e -x -o pipefail
 
 main() {
-    if [ "$genome"  == "dm3" ]; then rm_blackList="false"; fi
+    if [ "$genome"  == "dm3" ]; then rm_excludeList="false"; fi
     out_folder=$(jq --raw-output ".folder" <<< $(dx describe --json $DX_JOB_ID))
 
     echo "Value of out_prefix: '$out_prefix'"
@@ -11,7 +11,7 @@ main() {
     echo "Sanitized value of out_prefix: '$out_prefix'" 
     echo "Value of genome: '$genome'"
     echo "Value of bw_out: '$bw_out'"
-    echo "Value of rm_blackList: '$rm_blackList'"
+    echo "Value of rm_excludeList: '$rm_excludeList'"
     echo "Value of fragment_size: '$fragment_size'"
     echo "Value of out_folder: '$out_folder'"
     out_folder=${out_folder// /_}
@@ -64,7 +64,7 @@ main() {
     echo "export out_prefix=$out_prefix" >> $out_prefix.parameters.txt
     echo "export genome=$genome" >> $out_prefix.parameters.txt
     echo "export bw_out=$bw_out" >> $out_prefix.parameters.txt
-    echo "export rm_blackList=$rm_blackList" >> $out_prefix.parameters.txt
+    echo "export rm_excludeList=$rm_excludeList" >> $out_prefix.parameters.txt
     echo "export fragment_size=$fragment_size" >> $out_prefix.parameters.txt
     echo "export ChIP_fastq_name=$ChIP_fastq_prefix" >> $out_prefix.parameters.txt
     echo "export Control_fastq_name=$Control_fastq_prefix" >> $out_prefix.parameters.txt

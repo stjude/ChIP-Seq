@@ -74,7 +74,7 @@ main() {
 	    peak_bed=$(dx ls $DX_PROJECT_CONTEXT_ID:$out_folder/Results/$out_prefix/$peak_caller/*.bed)
 	    peak_bb=$(dx ls $DX_PROJECT_CONTEXT_ID:$out_folder/Results/$out_prefix/$peak_caller/*.bb)
 	    if [[ "$peak_bed" =~ .*\.clean\.bed$ ]]; then
-		echo "$report_section.$sub_section Coordinates for blacklist filtered peak regions are in \"$peak_caller/$peak_bed\". \"$peak_caller/$raw_peak\" has all the un-filtered peaks with detailed information (pvalue, FDR and etc.)." >> $out_prefix.readme.doc
+		echo "$report_section.$sub_section Coordinates for exclude list filtered peak regions are in \"$peak_caller/$peak_bed\". \"$peak_caller/$raw_peak\" has all the un-filtered peaks with detailed information (pvalue, FDR and etc.)." >> $out_prefix.readme.doc
 	    else 
 		echo "$report_section.$sub_section Coordinates for predicted peaks are in \"$peak_caller/$peak_bed\". You can also open \"$peak_caller/$raw_peak\" to check more information about peaks (pvalue, FDR and etc.)." >> $out_prefix.readme.doc
 	    fi

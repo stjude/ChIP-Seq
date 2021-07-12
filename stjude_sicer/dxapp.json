@@ -67,8 +67,8 @@
       "help": ""
     },
     {
-      "name": "rm_blackList",
-      "label": "remove peaks from black list or not",
+      "name": "rm_excludeList",
+      "label": "remove peaks from exclude list or not",
       "class": "boolean",
       "optional": true,
       "default": true,

@@ -156,13 +156,13 @@ main() {
 
 
     #############################################
-    # remove black list
+    # remove exclude list
     #############################################
-    if [ "$rm_blackList" == "true" ]; then
-      echo "Removing peaks overlapped with black list ..."
-      black_list=${genome}-Blacklist.bed
-      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR*) -b $black_list |cut -f 1-3 > ${ChIP_bam_prefix}_sicer.clean.bed" >> logfile
-      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR*) -b $black_list |cut -f 1-3 > ${ChIP_bam_prefix}_sicer.clean.bed
+    if [ "$rm_excludeList" == "true" ]; then
+      echo "Removing peaks overlapped with exclude list ..."
+      exclude_list=${genome}-excludelist.bed
+      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR*) -b $exclude_list |cut -f 1-3 > ${ChIP_bam_prefix}_sicer.clean.bed" >> logfile
+      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR*) -b $exclude_list |cut -f 1-3 > ${ChIP_bam_prefix}_sicer.clean.bed
     fi
 
     #############################################
@@ -184,8 +184,8 @@ main() {
     done | paste - - >> ${ChIP_bam_prefix}.metrics.txt
     echo >> ${ChIP_bam_prefix}.metrics.txt
     echo "`wc -l sicer/${ChIP_bam_prefix}_processed-W200-G600-islands-summary-FDR*` peaks" >> ${ChIP_bam_prefix}.metrics.txt
-    if [ "$rm_blackList" == "true" ]; then
-        echo "`wc -l ${ChIP_bam_prefix}_sicer.clean.bed` peaks after subtracting peaks from blacklist" >> ${ChIP_bam_prefix}.metrics.txt
+    if [ "$rm_excludeList" == "true" ]; then
+        echo "`wc -l ${ChIP_bam_prefix}_sicer.clean.bed` peaks after subtracting peaks from excludelist" >> ${ChIP_bam_prefix}.metrics.txt
     fi
     echo "fragment size used: $fragment_size" >> ${ChIP_bam_prefix}.metrics.txt
 
@@ -215,7 +215,7 @@ main() {
      wait
     fi
 
-    if [ "$rm_blackList" == "true" ]; then
+    if [ "$rm_excludeList" == "true" ]; then
       peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/SICER/ ${ChIP_bam_prefix}_sicer.clean.bed --brief  )
       LC_COLLATE=C sort -k1,1 -k2,2n ${ChIP_bam_prefix}_sicer.clean.bed > ${ChIP_bam_prefix}_sicer.clean.sorted.bed
       bedToBigBed ${ChIP_bam_prefix}_sicer.clean.sorted.bed ${genome}.chrom.sizes ${ChIP_bam_prefix}_sicer.clean.bb
@@ -249,7 +249,7 @@ main() {
 
     # output json bed files
     source bed2jsonbed.sh
-    if [ "$rm_blackList" == "true" ]; then
+    if [ "$rm_excludeList" == "true" ]; then
         bed2convert=${ChIP_bam_prefix}_sicer.clean.bed
     else 
         bed2convert=${ChIP_bam_prefix}_sicer.bed

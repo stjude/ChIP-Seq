@@ -146,16 +146,16 @@ main() {
    
 
     #############################################
-    # remove black list
+    # remove exclude list
     #############################################
-    echo "rm_blackList=$rm_blackList"
-    if [ "$rm_blackList" == "true" ]; then
-      echo "Removing peaks overlapped with black list ..." | tee -a logfile
-      black_list=${genome}-Blacklist.bed
-      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed" >> logfile
-      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed
-      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed" >> logfile
-      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $black_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed
+    echo "rm_excludeList=$rm_excludeList"
+    if [ "$rm_excludeList" == "true" ]; then
+      echo "Removing peaks overlapped with exclude list ..." | tee -a logfile
+      exclude_list=${genome}-excludelist.bed
+      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $exclude_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed" >> logfile
+      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_peaks.narrowPeak) -b $exclude_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed
+      echo "subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $exclude_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed" >> logfile
+      subtractBed -a <(gawk '{if($1 !~ /^chr/ && $1 ~ /^[1-9XYM]/ ) {print "chr"$_} else {print $_} }' macs2/${ChIP_bam_prefix}_summits.bed) -b $exclude_list | cut -f 1-4 > macs2/${ChIP_bam_prefix}_summits.clean.bed
       head macs2/${ChIP_bam_prefix}_summits.clean.bed
       tail macs2/${ChIP_bam_prefix}_summits.clean.bed
     fi
@@ -179,8 +179,8 @@ main() {
     done | paste - - >> ${ChIP_bam_prefix}.metrics.txt
     echo >> ${ChIP_bam_prefix}.metrics.txt
     echo "`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak` peaks" >> ${ChIP_bam_prefix}.metrics.txt
-    if [ "$rm_blackList" == "true" ]; then
-      echo "`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed` peaks after subtracting peaks from blacklist" >> ${ChIP_bam_prefix}.metrics.txt
+    if [ "$rm_excludeList" == "true" ]; then
+      echo "`wc -l macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed` peaks after subtracting peaks from excludelist" >> ${ChIP_bam_prefix}.metrics.txt
     fi
     echo "fragment size used: $fragment_size" >> ${ChIP_bam_prefix}.metrics.txt
 
@@ -213,7 +213,7 @@ main() {
 
     echo "uploading files ..."
 
-    if [ "$rm_blackList" == "true" ]; then
+    if [ "$rm_excludeList" == "true" ]; then
       peak_file=$(dx upload --tag sjcp-result-file --path $DX_PROJECT_CONTEXT_ID:$out_folder/Results/${out_prefix}/MACS2/ macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed --brief )
       LC_COLLATE=C sort -k1,1 -k2,2n macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed > macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed
       head macs2/${ChIP_bam_prefix}_peaks.narrowPeak.clean.sorted.bed
@@ -247,7 +247,7 @@ main() {
 
     # output json bed files
     source bed2jsonbed.sh
-    if [ "$rm_blackList" == "true" ]; then
+    if [ "$rm_excludeList" == "true" ]; then
         bed2convert=${ChIP_bam_prefix}_peaks.narrowPeak.clean.bed
     else 
         bed2convert=${ChIP_bam_prefix}_peaks.narrowPeak.bed
