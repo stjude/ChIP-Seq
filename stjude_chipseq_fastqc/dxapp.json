@@ -7,7 +7,7 @@
     "Statistics"
   ],
   "dxapi": "1.0.0",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "inputSpec": [
     {
       "name": "reads",
@@ -108,7 +108,7 @@
   "runSpec": {
     "execDepends": [
       {
-        "name": "openjdk-7-jre-headless"
+        "name": "openjdk-8-jre"
       }
     ],
     "systemRequirements": {
@@ -118,8 +118,9 @@
     },
     "file": "src/code.sh",
     "interpreter": "bash",
-	"distribution": "Ubuntu",
-	"release": "14.04"
+    "distribution": "Ubuntu",
+    "release": "20.04",
+    "version": "0"
   },
   "access": {
     "project": "CONTRIBUTE",

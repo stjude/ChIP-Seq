@@ -3,7 +3,7 @@
   "title": "stjude_macs2",
   "summary": "This app removes multiple mapped reads, duplicated reads and calls peaks. It requires both ChIP bam file and control bam file as input. ",
   "dxapi": "1.0.0",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "inputSpec": [
     {
       "name": "parameter_file",
@@ -59,8 +59,8 @@
       "help": ""
     },
     {
-      "name": "rm_blackList",
-      "label": "remove peaks from black list or not",
+      "name": "rm_excludeList",
+      "label": "remove peaks from exclude list or not",
       "class": "boolean",
       "optional": true,
       "default": true,
@@ -216,7 +216,8 @@
       }
     },
     "distribution": "Ubuntu",
-    "release": "14.04"
+    "release": "20.04",
+    "version": "0"
   },
   "access": {
     "project": "CONTRIBUTE",

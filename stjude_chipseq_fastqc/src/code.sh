@@ -7,10 +7,10 @@ set -e -x -o pipefail
 
 # read parameters from file
 if [ "$parameter_file" != "" ]; then 
-echo "  [*] parsing parameters from parameter file ..."
-dx download "$parameter_file" -o parameters.txt
-source parameters.txt
-echo "$out_prefix"
+  echo "  [*] parsing parameters from parameter file ..."
+  dx download "$parameter_file" -o parameters.txt
+  source parameters.txt
+  echo "$out_prefix"
 fi
 
 #
